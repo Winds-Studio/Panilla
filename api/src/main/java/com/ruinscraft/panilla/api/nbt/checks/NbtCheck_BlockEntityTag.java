@@ -114,11 +114,12 @@ public class NbtCheck_BlockEntityTag extends NbtCheck {
                 return NbtCheckResult.FAIL;
             }
 
-            if (panilla.getPConfig().strictness == PStrictness.STRICT) {
-                if (!(itemName.contains("shulker") || itemName.contains("itemstack") || itemName.contains("itemblock"))) {
-                    return NbtCheckResult.FAIL;
-                }
-            }
+            // Dreeam - Don't scan items inside containers
+            // if (panilla.getPConfig().strictness == PStrictness.STRICT) {
+            //     if (!(itemName.contains("shulker") || itemName.contains("itemstack") || itemName.contains("itemblock"))) {
+            //         return NbtCheckResult.FAIL;
+            //     }
+            // }
 
             // Campfires should not have BlockEntityTag
             if (itemName.contains("campfire")) {
