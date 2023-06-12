@@ -79,9 +79,9 @@ public class PacketInspector implements IPacketInspector {
 
             if (itemStack == null || !itemStack.u()) return;
 
-            NbtTagCompound tag = new NbtTagCompound(itemStack.v());
-            String itemClass = itemStack.c().getClass().getSimpleName();
-            String packetClass = packet.getClass().getSimpleName();
+            NbtTagCompound tag = new NbtTagCompound(itemStack.w());
+            String itemClass = itemStack.q();
+            String packetClass = "PacketPlayInSetCreativeSlot";
 
             NbtChecks.checkPacketPlayIn(slot, tag, itemClass, packetClass, panilla);
         }
@@ -107,7 +107,7 @@ public class PacketInspector implements IPacketInspector {
                 return;
             }
 
-            NbtTagCompound tag = new NbtTagCompound(itemStack.v());
+            NbtTagCompound tag = new NbtTagCompound(itemStack.w());
             String itemClass = itemStack.getClass().getSimpleName();
             String packetClass = packet.getClass().getSimpleName();
 
@@ -134,7 +134,7 @@ public class PacketInspector implements IPacketInspector {
                     continue;
                 }
 
-                NbtTagCompound tag = new NbtTagCompound(itemStack.v());
+                NbtTagCompound tag = new NbtTagCompound(itemStack.w());
                 String itemClass = itemStack.getClass().getSimpleName();
                 String packetClass = packet.getClass().getSimpleName();
 
@@ -168,7 +168,7 @@ public class PacketInspector implements IPacketInspector {
                         return;
                     }
 
-                    INbtTagCompound tag = new NbtTagCompound(item.j().v());
+                    INbtTagCompound tag = new NbtTagCompound(item.j().w());
                     String itemName = item.j().d().a();
                     FailedNbt failedNbt = NbtChecks.checkAll(tag, itemName, panilla);
 
@@ -198,12 +198,13 @@ public class PacketInspector implements IPacketInspector {
 
         try {
             Class<?> packetPlayOutSetSlotClass = Class.forName("net.minecraft.network.protocol.game.PacketPlayOutSetSlot");
-            Class<?>[] type = { int.class, int.class, int.class, ItemStack.class };
+            Class<?>[] type = {int.class, int.class, int.class, ItemStack.class};
             Constructor<?> constructor = packetPlayOutSetSlotClass.getConstructor(type);
-            Object[] params = { 0, 0, slot, new ItemStack(Blocks.a) };
+            Object[] params = {0, 0, slot, new ItemStack(Blocks.a)};
             Object packetPlayOutSetSlotInstance = constructor.newInstance(params);
             entityPlayer.c.a((Packet<?>) packetPlayOutSetSlotInstance);
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException |
+                 InvocationTargetException e) {
             e.printStackTrace();
         }
     }
