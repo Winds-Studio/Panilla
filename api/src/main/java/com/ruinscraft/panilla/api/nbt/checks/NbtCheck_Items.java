@@ -19,7 +19,7 @@ public class NbtCheck_Items extends NbtCheck {
         INbtTagList itemsTagList = tag.getList(getName());
 
         // Bundles should only have 64 items
-        if (itemsTagList.size() > 64) {
+        if (itemsTagList.size() > 64 && !panilla.getPConfig().allowIllegalShulke) {
             return NbtCheckResult.CRITICAL;
         }
 
