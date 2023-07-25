@@ -115,7 +115,7 @@ public class NbtCheck_BlockEntityTag extends NbtCheck {
             }
 
              // Dreeam - Don't scan items inside containers
-             if (panilla.getPConfig().strictness == PStrictness.STRICT && !panilla.getPConfig().allowIllegalShulke) {
+             if (panilla.getPConfig().strictness == PStrictness.STRICT && !panilla.getPConfig().allowIllegalShulker) {
                  if (!(itemName.contains("shulker") || itemName.contains("itemstack") || itemName.contains("itemblock"))) {
                      return NbtCheckResult.FAIL;
                  }
