@@ -74,6 +74,3 @@ max-enchantment-levels:
 #
 # Generally, you should never have to touch this.
 max-non-minecraft-nbt-keys: 16
-
-anarchy-settings:
-  allow-illegal-shulker: false

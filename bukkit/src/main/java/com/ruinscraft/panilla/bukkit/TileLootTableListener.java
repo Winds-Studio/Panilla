@@ -23,7 +23,7 @@ public class TileLootTableListener implements Listener {
         if (bVersion.contains("1.8") || bVersion.contains("1.12")) {
             checkForLootable = false;
         } else {
-            checkForLootable = true;
+            checkForLootable = false;
         }
     }
 

@@ -112,8 +112,6 @@ public class PanillaPlugin extends JavaPlugin implements IPanilla {
         }
 
         pConfig.minecraftMaxEnchantmentLevelOverrides = enchantmentOverrides;
-
-        pConfig.allowIllegalShulker = getConfig().getBoolean("anarchy-settings.allow-llegal-shulker", pConfig.allowIllegalShulker);
     }
 
     private synchronized void loadTranslations(String languageKey) {

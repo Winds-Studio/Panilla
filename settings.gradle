@@ -1,4 +1,4 @@
-rootProject.name = 'panilla'
+rootProject.name = 'Panilla'
 
 // api
 include(':panilla-api')

@@ -105,37 +105,37 @@ public class NbtCheck_BlockEntityTag extends NbtCheck {
             }
         }
 
+        // Dreeam - Don't scan items inside containers
         // tiles with items/containers (chests, hoppers, shulkerboxes, etc)
-        if (blockEntityTag.hasKey("Items")) {
-            // only ItemShulkerBoxes should have "Items" NBT tag in survival
-            itemName = itemName.toLowerCase();
-
-            if (panilla.getPConfig().noBlockEntityTag) {
-                return NbtCheckResult.FAIL;
-            }
-
-             // Dreeam - Don't scan items inside containers
-             if (panilla.getPConfig().strictness == PStrictness.STRICT && !panilla.getPConfig().allowIllegalShulker) {
-                 if (!(itemName.contains("shulker") || itemName.contains("itemstack") || itemName.contains("itemblock"))) {
-                     return NbtCheckResult.FAIL;
-                 }
-             }
-
-            // Campfires should not have BlockEntityTag
-            if (itemName.contains("campfire")) {
-                return NbtCheckResult.FAIL;
-            }
-
-            INbtTagList items = blockEntityTag.getList("Items", NbtDataType.COMPOUND);
-            FailedBlockEntityTagItemsNbt failedNbt = checkItems(getName(), items, itemName, panilla);
-
-            // Only remove NBT from shulkerbox if it contains a CRITICAL item
-            if (failedNbt.critical()) return NbtCheckResult.CRITICAL;
-
-//            if (FailedNbt.fails(failedNbt)) {
-//                return failedNbt.result;
+//        if (blockEntityTag.hasKey("Items")) {
+//            // only ItemShulkerBoxes should have "Items" NBT tag in survival
+//            itemName = itemName.toLowerCase();
+//
+//            if (panilla.getPConfig().noBlockEntityTag) {
+//                return NbtCheckResult.FAIL;
 //            }
-        }
+//
+//             if (panilla.getPConfig().strictness == PStrictness.STRICT) {
+//                 if (!(itemName.contains("shulker") || itemName.contains("itemstack") || itemName.contains("itemblock"))) {
+//                     return NbtCheckResult.FAIL;
+//                 }
+//             }
+//
+//            // Campfires should not have BlockEntityTag
+//            if (itemName.contains("campfire")) {
+//                return NbtCheckResult.FAIL;
+//            }
+//
+//            INbtTagList items = blockEntityTag.getList("Items", NbtDataType.COMPOUND);
+//            FailedBlockEntityTagItemsNbt failedNbt = checkItems(getName(), items, itemName, panilla);
+//
+//            // Only remove NBT from shulkerbox if it contains a CRITICAL item
+//            if (failedNbt.critical()) return NbtCheckResult.CRITICAL;
+//
+////            if (FailedNbt.fails(failedNbt)) {
+////                return failedNbt.result;
+////            }
+//        }
 
         // /give @p furnace{BlockEntityTag:{RecipesUsed:{"minecraft:bow":1}}} 1
         // Breaking this furnace in the world will cause a client crash

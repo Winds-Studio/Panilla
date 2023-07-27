@@ -24,5 +24,4 @@ public abstract class PConfig {
     public int maxNonMinecraftNbtKeys = 16;
     public boolean overrideMinecraftMaxEnchantmentLevels = false;
     public Map<String, Integer> minecraftMaxEnchantmentLevelOverrides = new HashMap<>();
-    public boolean allowIllegalShulker = false;
 }
