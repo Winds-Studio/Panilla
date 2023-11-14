@@ -8,13 +8,30 @@ subprojects {
 
     repositories {
         mavenLocal()
-        jcenter()
+        mavenCentral()
+        flatDir {
+            dirs '../libs'
+        }
+        maven {
+            name "spigotmc-repo"
+            url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
+        }
+        maven {
+            name "papermc-repo"
+            url "https://repo.papermc.io/repository/maven-public"
+        }
+    }
+
+    dependencies {
+        compileOnly 'org.spigotmc:spigot-api:1.20.2-R0.1-SNAPSHOT'
+        compileOnly 'com.mojang:brigadier:1.1.8'
+        compileOnly 'io.netty:netty-all:4.1.101.Final'
     }
 
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
 }
 
-task clean {
+tasks.register('clean') {
     delete './target'
 }
