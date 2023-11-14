@@ -49,9 +49,7 @@ public class InventoryCleaner implements IInventoryCleaner {
                 Field slotsField = Container.class.getField("c");
                 List<Slot> slots = (List<Slot>) slotsField.get(container);
                 containerSlotsSize = slots.size();
-            } catch (NoSuchFieldException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
+            } catch (NoSuchFieldException | IllegalAccessException e) {
                 e.printStackTrace();
             }
         }

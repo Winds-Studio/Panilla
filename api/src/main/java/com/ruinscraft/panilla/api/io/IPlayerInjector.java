@@ -2,7 +2,6 @@ package com.ruinscraft.panilla.api.io;
 
 import com.ruinscraft.panilla.api.IPanilla;
 import com.ruinscraft.panilla.api.IPanillaPlayer;
-import com.ruinscraft.panilla.api.io.dplx.PacketDecompressorDplx;
 import com.ruinscraft.panilla.api.io.dplx.PacketInspectorDplx;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
@@ -35,7 +34,7 @@ public interface IPlayerInjector {
         return "decoder";
     }
 
-    default void register(IPanilla panilla, IPanillaPlayer player) throws IOException {
+    default void register(IPanilla panilla, IPanillaPlayer player) {
         Channel pChannel = getPlayerChannel(player);
 
         if (pChannel == null || !pChannel.isRegistered()) {
@@ -67,7 +66,7 @@ public interface IPlayerInjector {
         }
     }
 
-    default void unregister(final IPanillaPlayer player) throws IOException {
+    default void unregister(final IPanillaPlayer player) {
         Channel pChannel = getPlayerChannel(player);
 
         if (pChannel == null || !pChannel.isRegistered()) {

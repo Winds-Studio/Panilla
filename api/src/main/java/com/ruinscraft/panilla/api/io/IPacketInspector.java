@@ -39,7 +39,7 @@ public interface IPacketInspector {
 
     void stripNbtFromItemEntityLegacy(int entityId);
 
-    void validateBaseComponentParse(String string) throws Exception;
+    void validateBaseComponentParse(String string);
 
     default void checkPlayIn(IPanilla panilla, IPanillaPlayer player, Object packetHandle) throws PacketException {
         try {

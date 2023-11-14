@@ -7,8 +7,8 @@ import java.util.Map;
 
 public abstract class PConfig {
 
-    public static String PERMISSION_LOG_CHAT = "panilla.log.chat";
-    public static String PERMISSION_BYPASS = "panilla.bypass";
+    public static final String PERMISSION_LOG_CHAT = "panilla.log.chat";
+    public static final String PERMISSION_BYPASS = "panilla.bypass";
 
     /* Defaults */
     public String language = "en";

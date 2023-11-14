@@ -217,7 +217,7 @@ public class PacketInspector implements IPacketInspector {
     }
 
     @Override
-    public void validateBaseComponentParse(String string) throws Exception {
+    public void validateBaseComponentParse(String string) {
         IChatBaseComponent.ChatSerializer.a(string);
     }
 

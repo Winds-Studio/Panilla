@@ -15,7 +15,7 @@ import org.bukkit.loot.Lootable;
 
 public class TileLootTableListener implements Listener {
 
-    private boolean checkForLootable;
+    private final boolean checkForLootable;
 
     public TileLootTableListener() {
         String bVersion = Bukkit.getVersion();

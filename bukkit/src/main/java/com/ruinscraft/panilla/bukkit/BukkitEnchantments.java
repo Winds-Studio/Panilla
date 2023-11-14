@@ -18,7 +18,7 @@ public class BukkitEnchantments implements IEnchantments {
         is_legacy = Bukkit.getVersion().contains("1.12") || Bukkit.getVersion().contains("1.8");
     }
 
-    private PConfig pConfig;
+    private final PConfig pConfig;
 
     public BukkitEnchantments(PConfig pConfig) {
         this.pConfig = pConfig;
@@ -69,11 +69,7 @@ public class BukkitEnchantments implements IEnchantments {
                 bukkitEnchantment = (Enchantment) getByKey.invoke(null,
                         new NamespacedKey(enchCompat.namedKey.split(":")[0],
                                 enchCompat.namedKey.split(":")[1]));
-            } catch (NoSuchMethodException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
+            } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
                 e.printStackTrace();
             }
         }

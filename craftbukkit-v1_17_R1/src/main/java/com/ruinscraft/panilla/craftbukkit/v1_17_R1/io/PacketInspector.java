@@ -193,15 +193,8 @@ public class PacketInspector implements IPacketInspector {
             Object[] params = { 0, 0, slot, new ItemStack(Blocks.a) };
             Object packetPlayOutSetSlotInstance = constructor.newInstance(params);
             entityPlayer.b.sendPacket((Packet<?>) packetPlayOutSetSlotInstance);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
+        } catch (ClassNotFoundException | InvocationTargetException | NoSuchMethodException | IllegalAccessException |
+                 InstantiationException e) {
             e.printStackTrace();
         }
     }
@@ -229,7 +222,7 @@ public class PacketInspector implements IPacketInspector {
     }
 
     @Override
-    public void validateBaseComponentParse(String string) throws Exception {
+    public void validateBaseComponentParse(String string) {
         IChatBaseComponent.ChatSerializer.a(string);
     }
 
