@@ -41,6 +41,3 @@ manifest.mf
 
 # delombok
 */src/main/lombok
-
-# Local craftbukkit/bukkit/spigot Jars and mojang brigadier-1.1.8
-*.jar
