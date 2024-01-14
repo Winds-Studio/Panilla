@@ -15,16 +15,20 @@ import org.bukkit.loot.Lootable;
 
 public class TileLootTableListener implements Listener {
 
-    private final boolean checkForLootable;
+    private boolean checkForLootable;
 
     public TileLootTableListener() {
+        checkForLootable = false;
+
+        /*
         String bVersion = Bukkit.getVersion();
 
         if (bVersion.contains("1.8") || bVersion.contains("1.12")) {
             checkForLootable = false;
         } else {
-            checkForLootable = false;
+            checkForLootable = true;
         }
+         */
     }
 
     @EventHandler
