@@ -41,7 +41,8 @@ public class PTranslations {
         if (unformatted == null) {
             return "unknown translation: " + key;
         }
-        return String.format(translations.get(key), (Object) replacements);
+        String formatted = String.format(translations.get(key), replacements);
+        return formatted;
     }
 
 }

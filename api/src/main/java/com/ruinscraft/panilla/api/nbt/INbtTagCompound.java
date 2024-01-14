@@ -3,7 +3,6 @@ package com.ruinscraft.panilla.api.nbt;
 import com.ruinscraft.panilla.api.nbt.checks.NbtChecks;
 
 import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -47,7 +46,12 @@ public interface INbtTagCompound {
     INbtTagCompound getCompound(String key);
 
     default int getStringSizeBytes() {
-        return getHandle().toString().getBytes(StandardCharsets.UTF_8).length;
+        try {
+            return getHandle().toString().getBytes("UTF-8").length;
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
 }

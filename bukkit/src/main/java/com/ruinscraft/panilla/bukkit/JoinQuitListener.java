@@ -14,7 +14,7 @@ import java.io.IOException;
 public class JoinQuitListener implements Listener {
 
     private final IPanilla panilla;
-    private final JavaPlugin panillaPlugin;
+    private JavaPlugin panillaPlugin;
 
     public JoinQuitListener(JavaPlugin panillaPlugin, IPanilla panilla) {
         this.panillaPlugin = panillaPlugin;
@@ -29,15 +29,21 @@ public class JoinQuitListener implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         IPanillaPlayer pplayer = new BukkitPanillaPlayer(event.getPlayer());
         panilla.getInventoryCleaner().clean(pplayer);
-        panilla.getPlayerInjector().register(panilla, pplayer);
-
+        try {
+            panilla.getPlayerInjector().register(panilla, pplayer);
+        } catch (IOException e) {
+            // Ignore
+        }
     }
 
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
         IPanillaPlayer pplayer = new BukkitPanillaPlayer(event.getPlayer());
-        panilla.getPlayerInjector().unregister(pplayer);
-
+        try {
+            panilla.getPlayerInjector().unregister(pplayer);
+        } catch (IOException e) {
+            // Ignore
+        }
     }
 
 }

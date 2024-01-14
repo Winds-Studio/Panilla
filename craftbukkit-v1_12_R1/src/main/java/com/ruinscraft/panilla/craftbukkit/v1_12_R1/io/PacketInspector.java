@@ -208,7 +208,7 @@ public class PacketInspector implements IPacketInspector {
     }
 
     @Override
-    public void validateBaseComponentParse(String string) {
+    public void validateBaseComponentParse(String string) throws Exception {
         // do nothing
     }
 

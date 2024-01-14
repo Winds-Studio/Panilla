@@ -18,7 +18,7 @@ public class BukkitEnchantments implements IEnchantments {
         is_legacy = Bukkit.getVersion().contains("1.12") || Bukkit.getVersion().contains("1.8");
     }
 
-    private final PConfig pConfig;
+    private PConfig pConfig;
 
     public BukkitEnchantments(PConfig pConfig) {
         this.pConfig = pConfig;

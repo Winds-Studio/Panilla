@@ -38,7 +38,7 @@ public class PlayerInjector implements IPlayerInjector {
         return new PanillaPacketDecoder(EnumProtocolDirection.SERVERBOUND);
     }
 
-    private static class PanillaPacketDecoder extends PacketDecoder {
+    private class PanillaPacketDecoder extends PacketDecoder {
         public PanillaPacketDecoder(EnumProtocolDirection enumProtocolDirection) {
             super(enumProtocolDirection);
         }

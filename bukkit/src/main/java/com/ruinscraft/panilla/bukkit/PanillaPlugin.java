@@ -339,8 +339,11 @@ public class PanillaPlugin extends JavaPlugin implements IPanilla {
 
         /* Inject already online players in case of reload */
         for (Player player : Bukkit.getOnlinePlayers()) {
-            playerInjector.register(this, new BukkitPanillaPlayer(player));
-
+            try {
+                playerInjector.register(this, new BukkitPanillaPlayer(player));
+            } catch (IOException e) {
+                // Ignore
+            }
         }
     }
 
@@ -348,8 +351,11 @@ public class PanillaPlugin extends JavaPlugin implements IPanilla {
     public void onDisable() {
         /* Uninject any online players */
         for (Player player : Bukkit.getOnlinePlayers()) {
-            playerInjector.unregister(new BukkitPanillaPlayer(player));
-
+            try {
+                playerInjector.unregister(new BukkitPanillaPlayer(player));
+            } catch (IOException e) {
+                // Ignore
+            }
         }
     }
 
