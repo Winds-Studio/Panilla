@@ -4,6 +4,7 @@ import com.ruinscraft.panilla.api.IPanilla;
 import com.ruinscraft.panilla.api.IPanillaPlayer;
 import com.ruinscraft.panilla.api.exception.EntityNbtNotPermittedException;
 import com.ruinscraft.panilla.api.exception.FailedNbt;
+import com.ruinscraft.panilla.api.exception.FailedNbtList;
 import com.ruinscraft.panilla.api.exception.NbtNotPermittedException;
 import com.ruinscraft.panilla.api.io.IPacketInspector;
 import com.ruinscraft.panilla.api.nbt.INbtTagCompound;
@@ -11,10 +12,7 @@ import com.ruinscraft.panilla.api.nbt.checks.NbtChecks;
 import com.ruinscraft.panilla.craftbukkit.v1_17_R1.nbt.NbtTagCompound;
 import net.minecraft.network.chat.IChatBaseComponent;
 import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.PacketPlayInSetCreativeSlot;
-import net.minecraft.network.protocol.game.PacketPlayOutSetSlot;
-import net.minecraft.network.protocol.game.PacketPlayOutSpawnEntity;
-import net.minecraft.network.protocol.game.PacketPlayOutWindowItems;
+import net.minecraft.network.protocol.game.*;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.EntityPlayer;
 import net.minecraft.server.level.WorldServer;
@@ -36,6 +34,26 @@ public class PacketInspector implements IPacketInspector {
 
     public PacketInspector(IPanilla panilla) {
         this.panilla = panilla;
+    }
+
+    @Override
+    public void checkPacketPlayInClickContainer(Object _packet) throws NbtNotPermittedException {
+        if (_packet instanceof PacketPlayInWindowClick) {
+            PacketPlayInWindowClick packet = (PacketPlayInWindowClick) _packet;
+
+            int slot = packet.c();
+            ItemStack itemStack = packet.e();
+
+            if (itemStack == null || !itemStack.hasTag()) {
+                return;
+            }
+
+            NbtTagCompound tag = new NbtTagCompound(itemStack.getTag());
+            String itemClass = itemStack.getItem().getClass().getSimpleName();
+            String packetClass = "PacketPlayInWindowClick";
+
+            NbtChecks.checkPacketPlayIn(slot, tag, itemClass, packetClass, panilla);
+        }
     }
 
     @Override
@@ -168,9 +186,15 @@ public class PacketInspector implements IPacketInspector {
 
                         INbtTagCompound tag = new NbtTagCompound(item.getItemStack().getTag());
                         String itemName = item.getItemStack().getItem().getName();
-                        FailedNbt failedNbt = NbtChecks.checkAll(tag, itemName, panilla);
+                        FailedNbtList failedNbtList = NbtChecks.checkAll(tag, itemName, panilla);
 
-                        if (FailedNbt.fails(failedNbt)) {
+                        if (failedNbtList.containsCritical()) {
+                            throw new EntityNbtNotPermittedException(packet.getClass().getSimpleName(), false, failedNbtList.getCritical(), entityId, entity.getWorld().getWorld().getName());
+                        }
+
+                        FailedNbt failedNbt = failedNbtList.findFirstNonCritical();
+
+                        if (failedNbt != null) {
                             throw new EntityNbtNotPermittedException(packet.getClass().getSimpleName(), false, failedNbt, entityId, entity.getWorld().getWorld().getName());
                         }
                     }

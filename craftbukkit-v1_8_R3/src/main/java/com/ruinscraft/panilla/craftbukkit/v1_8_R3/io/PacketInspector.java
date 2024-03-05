@@ -3,6 +3,7 @@ package com.ruinscraft.panilla.craftbukkit.v1_8_R3.io;
 import com.ruinscraft.panilla.api.IPanilla;
 import com.ruinscraft.panilla.api.IPanillaPlayer;
 import com.ruinscraft.panilla.api.exception.FailedNbt;
+import com.ruinscraft.panilla.api.exception.FailedNbtList;
 import com.ruinscraft.panilla.api.exception.LegacyEntityNbtNotPermittedException;
 import com.ruinscraft.panilla.api.exception.NbtNotPermittedException;
 import com.ruinscraft.panilla.api.io.IPacketInspector;
@@ -21,6 +22,26 @@ public class PacketInspector implements IPacketInspector {
 
     public PacketInspector(IPanilla panilla) {
         this.panilla = panilla;
+    }
+
+    @Override
+    public void checkPacketPlayInClickContainer(Object _packet) throws NbtNotPermittedException {
+        if (_packet instanceof PacketPlayInWindowClick) {
+            PacketPlayInWindowClick packet = (PacketPlayInWindowClick) _packet;
+
+            int slot = packet.b();
+            ItemStack itemStack = packet.e();
+
+            if (itemStack == null || !itemStack.hasTag()) {
+                return;
+            }
+
+            NbtTagCompound tag = new NbtTagCompound(itemStack.getTag());
+            String itemClass = itemStack.getItem().getClass().getSimpleName();
+            String packetClass = "PacketPlayInWindowClick";
+
+            NbtChecks.checkPacketPlayIn(slot, tag, itemClass, packetClass, panilla);
+        }
     }
 
     @Override
@@ -147,9 +168,16 @@ public class PacketInspector implements IPacketInspector {
 
                         INbtTagCompound tag = new NbtTagCompound(item.getItemStack().getTag());
                         String itemName = item.getItemStack().getItem().getName();
-                        FailedNbt failedNbt = NbtChecks.checkAll(tag, itemName, panilla);
 
-                        if (FailedNbt.fails(failedNbt)) {
+                        FailedNbtList failedNbtList = NbtChecks.checkAll(tag, itemName, panilla);
+
+                        if (failedNbtList.containsCritical()) {
+                            throw new LegacyEntityNbtNotPermittedException(packet.getClass().getSimpleName(), false, failedNbtList.getCritical(), entityId);
+                        }
+
+                        FailedNbt failedNbt = failedNbtList.findFirstNonCritical();
+
+                        if (failedNbt != null) {
                             throw new LegacyEntityNbtNotPermittedException(packet.getClass().getSimpleName(), false, failedNbt, entityId);
                         }
                     }
